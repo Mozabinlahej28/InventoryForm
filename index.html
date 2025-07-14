@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inventory Log</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <form id="inventoryForm">
+    <h2>Inventory Log</h2>
+
+    <label for="category">Category</label>
+    <select name="category" id="category" required>
+      <option value="">-- Select Category --</option>
+      <option value="TOOLS">TOOLS</option>
+      <option value="EQUIPMENTS">EQUIPMENTS</option>
+      <option value="CONSUMABLES">CONSUMABLE ITEMS</option>
+    </select>
+
+    <label for="name">Item Name</label>
+    <input type="text" name="name" id="name" required>
+
+    <label for="size">Size</label>
+    <input type="text" name="size" id="size">
+
+    <label for="quantity">Quantity</label>
+    <input type="text" name="quantity" id="quantity" required>
+
+    <label for="action">Action</label>
+    <select name="action" id="action" required>
+      <option value="">-- Select Action --</option>
+      <option value="Used">Used</option>
+      <option value="Added">Added</option>
+    </select>
+
+    <label for="notes">Notes</label>
+    <textarea name="notes" id="notes" rows="3" placeholder="Optional..."></textarea>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const scriptURL = https://script.google.com/macros/s/AKfycbwjAA_By28fYBK7sc5k5HdQzrN7E07Du05G6IUDJLZbKURxOji4jZLu0qWF1t7jefqYoQ/exec'; // Replace with your Apps Script URL
+
+    document.getElementById("inventoryForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      fetch(scriptURL, {
+        method: 'POST',
+        body: formData
+      })
+      .then(() => {
+        alert("✅ Inventory entry submitted!");
+        e.target.reset();
+      })
+      .catch(error => {
+        alert("❌ Submission failed: " + error.message);
+      });
+    });
+  </script>
+
+</body>
+</html>
