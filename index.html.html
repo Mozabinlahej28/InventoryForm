@@ -1,0 +1,841 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Inventory Entry Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8f8f8;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+    }
+    form {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <form id="inventoryForm">
+    <h2>Inventory Log</h2>
+
+    <label for="category">Category</label>
+    <select id="category" name="category" required>
+      <option value="">-- Select Category --</option>
+      <option value="Tools">TOOLS</option>
+      <option value="Equipments">EQUIPMENTS</option>
+      <option value="Consumables">CONSUMABLE ITEMS</option>
+    </select>
+
+    <label for="name">Item Name</label>
+    <select id="name" name="name" required>
+      <option value="">-- Select Item --</option>
+    </select>
+
+    <label for="size">Size</label>
+    <select id="size" name="size" required>
+      <option value="">-- Select Size --</option>
+    </select>
+
+    <label for="quantity">Quantity</label>
+    <input type="number" id="quantity" name="quantity" min="1" required>
+
+    <label for="action">Action</label>
+    <select id="action" name="action" required>
+      <option value="Used">Used</option>
+      <option value="Added">Added</option>
+    </select>
+
+    <label for="notes">Notes</label>
+    <textarea id="notes" name="notes" rows="3" placeholder="Optional..."></textarea>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const inventory = {
+  "Consumables": {
+    "baking paper": [
+      [
+        "",
+        "5 BOX"
+      ]
+    ],
+    "box (big cake)": [
+      [
+        "10 x 10 x 5",
+        "441"
+      ]
+    ],
+    "box (cinnamon)": [
+      [
+        "6.5 x 9.5 x 2.5",
+        "912"
+      ]
+    ],
+    "box (mini cake)": [
+      [
+        "6 x 6 x 5",
+        "491"
+      ]
+    ],
+    "cake board": [
+      [
+        "10 inch round",
+        "369"
+      ],
+      [
+        "6 inch round",
+        "471"
+      ]
+    ],
+    "cling film": [
+      [
+        "",
+        "4 BOX"
+      ]
+    ],
+    "gloves": [
+      [
+        "",
+        "35 BOX"
+      ]
+    ],
+    "huom ballpen black": [
+      [
+        "",
+        "1"
+      ]
+    ],
+    "huom ballpen blue": [
+      [
+        "",
+        "35"
+      ]
+    ],
+    "huom color pencil": [
+      [
+        "",
+        "0"
+      ]
+    ],
+    "huom coloring book": [
+      [
+        "",
+        "16"
+      ]
+    ],
+    "huom note pad": [
+      [
+        "",
+        "78"
+      ]
+    ],
+    "huom pencil": [
+      [
+        "",
+        "35"
+      ]
+    ],
+    "huom sticker logo": [
+      [
+        "ROUND",
+        "1030"
+      ],
+      [
+        "SMALL",
+        "98"
+      ]
+    ],
+    "instax frame": [
+      [
+        "",
+        "50"
+      ]
+    ],
+    "name tag sticker": [
+      [
+        "",
+        "2 ROLLS"
+      ]
+    ],
+    "paper bag": [
+      [
+        "",
+        "250"
+      ]
+    ],
+    "piping bag": [
+      [
+        "",
+        "4 BOX"
+      ]
+    ],
+    "pizza box": [
+      [
+        "",
+        "130"
+      ]
+    ],
+    "plastic box (teramisu)": [
+      [
+        "",
+        "43"
+      ]
+    ],
+    "salad bowl (disposable)": [
+      [
+        "",
+        "450"
+      ]
+    ],
+    "tissue maxiroll": [
+      [
+        "",
+        "9"
+      ]
+    ],
+    "tissue z-fold": [
+      [
+        "",
+        "33"
+      ]
+    ]
+  },
+  "Equipments": {
+    "aprons": [
+      [
+        "adult",
+        "43"
+      ],
+      [
+        "kids",
+        "24"
+      ]
+    ],
+    "blender machine": [
+      [
+        "",
+        "1"
+      ]
+    ],
+    "camera instax": [
+      [
+        "",
+        "1"
+      ]
+    ],
+    "card machine": [
+      [
+        "",
+        "2"
+      ]
+    ],
+    "coffee grinder": [
+      [
+        "",
+        "1"
+      ]
+    ],
+    "coffee machine": [
+      [
+        "",
+        "2"
+      ]
+    ],
+    "company phone": [
+      [
+        "",
+        "2"
+      ]
+    ],
+    "cooper": [
+      [
+        "",
+        "2"
+      ]
+    ],
+    "dishwasher": [
+      [
+        "",
+        "1"
+      ]
+    ],
+    "dough sheeter": [
+      [
+        "",
+        "1"
+      ]
+    ],
+    "electric lamp (insect killer)": [
+      [
+        "",
+        "1"
+      ]
+    ],
+    "extension wire": [
+      [
+        "",
+        "4"
+      ]
+    ],
+    "fridge": [
+      [
+        "",
+        "3"
+      ]
+    ],
+    "fryer electric": [
+      [
+        "",
+        "2"
+      ]
+    ],
+    "garbage bin": [
+      [
+        "",
+        "2"
+      ]
+    ],
+    "hand blender": [
+      [
+        "",
+        "1"
+      ]
+    ],
+    "ice crusher": [
+      [
+        "",
+        "1"
+      ]
+    ],
+    "ice machine": [
+      [
+        "",
+        "1"
+      ]
+    ],
+    "induction": [
+      [
+        "2 rings",
+        "1"
+      ],
+      [
+        "1 ring",
+        "11"
+      ]
+    ],
+    "induction (attached)": [
+      [
+        "3 rings",
+        "1"
+      ]
+    ],
+    "instagram follower counter": [
+      [
+        "",
+        "1"
+      ]
+    ],
+    "ipod apple": [
+      [
+        "",
+        "1"
+      ]
+    ],
+    "label gun": [
+      [
+        "",
+        "1"
+      ]
+    ],
+    "laptop": [
+      [
+        "",
+        "2"
+      ]
+    ],
+    "mixer": [
+      [
+        "20 ltrs",
+        "1"
+      ]
+    ],
+    "mixer (kitchen aid)": [
+      [
+        "7 ltrs",
+        "2"
+      ]
+    ],
+    "nozzle tip": [
+      [
+        "",
+        "67"
+      ]
+    ],
+    "oven (rational)": [
+      [
+        "7 racks",
+        "1"
+      ]
+    ],
+    "oven (unox)": [
+      [
+        "10 racks",
+        "1"
+      ]
+    ],
+    "oven deck": [
+      [
+        "2 racks",
+        "1"
+      ]
+    ],
+    "pasta sheeter": [
+      [
+        "",
+        "7"
+      ]
+    ],
+    "printer epson": [
+      [
+        "",
+        "1"
+      ]
+    ],
+    "proofer": [
+      [
+        "5 racks",
+        "1"
+      ]
+    ],
+    "scale": [
+      [
+        "",
+        "3"
+      ]
+    ],
+    "thermometer": [
+      [
+        "",
+        "7"
+      ]
+    ],
+    "tv remote": [
+      [
+        "",
+        "1"
+      ]
+    ],
+    "tv screen": [
+      [
+        "",
+        "4"
+      ]
+    ]
+  },
+  "Tools": {
+    "baking pan": [
+      [
+        "7 inches round",
+        "3"
+      ],
+      [
+        "8 inches round",
+        "6"
+      ]
+    ],
+    "baking tray (cinnamon tray)": [
+      [
+        "",
+        "22"
+      ]
+    ],
+    "black metal tray": [
+      [
+        "50cm x 30cm",
+        "5"
+      ]
+    ],
+    "black rubber spoon": [
+      [
+        "big",
+        "14"
+      ]
+    ],
+    "black tray": [
+      [
+        "40cm x 30cm",
+        "17"
+      ],
+      [
+        "50cm x 30cm",
+        "11"
+      ],
+      [
+        "60cm x 40cm",
+        "8"
+      ]
+    ],
+    "blue rubber spoon": [
+      [
+        "small",
+        "16"
+      ]
+    ],
+    "brush": [
+      [
+        "",
+        "17"
+      ]
+    ],
+    "cake turning table": [
+      [
+        "",
+        "28"
+      ]
+    ],
+    "chef hat pasta cutter": [
+      [
+        "",
+        "5"
+      ]
+    ],
+    "clear plastic mixing bowl": [
+      [
+        "32 cm round",
+        "15"
+      ]
+    ],
+    "cutter": [
+      [
+        "",
+        "4"
+      ]
+    ],
+    "dough box (white)": [
+      [
+        "",
+        "14"
+      ]
+    ],
+    "fryer pan": [
+      [
+        "28 cm",
+        "13"
+      ]
+    ],
+    "glass cake stand": [
+      [
+        "",
+        "3"
+      ]
+    ],
+    "knife": [
+      [
+        "small",
+        "12"
+      ],
+      [
+        "big",
+        "15"
+      ]
+    ],
+    "ladder": [
+      [
+        "",
+        "1"
+      ]
+    ],
+    "measure": [
+      [
+        "",
+        "5"
+      ]
+    ],
+    "measuring cups": [
+      [
+        "",
+        "33"
+      ]
+    ],
+    "metal brush (pizza)": [
+      [
+        "",
+        "2"
+      ]
+    ],
+    "oven gloves": [
+      [
+        "",
+        "4"
+      ]
+    ],
+    "peeler": [
+      [
+        "",
+        "10"
+      ]
+    ],
+    "pizza cutter": [
+      [
+        "",
+        "3"
+      ]
+    ],
+    "pizza peel": [
+      [
+        "",
+        "3"
+      ]
+    ],
+    "plastic chopping board": [
+      [
+        "",
+        "36"
+      ]
+    ],
+    "plastic scraper": [
+      [
+        "",
+        "30"
+      ]
+    ],
+    "ring cutter": [
+      [
+        "",
+        "6"
+      ]
+    ],
+    "roasting pan": [
+      [
+        "",
+        "12"
+      ]
+    ],
+    "rolling pin": [
+      [
+        "",
+        "22"
+      ]
+    ],
+    "sauce pan": [
+      [
+        "32 cm",
+        "9"
+      ],
+      [
+        "28 cm",
+        "8"
+      ],
+      [
+        "small",
+        "2"
+      ]
+    ],
+    "silicon mat": [
+      [
+        "",
+        "35"
+      ]
+    ],
+    "spatula": [
+      [
+        "big",
+        "33"
+      ],
+      [
+        "small",
+        "20"
+      ]
+    ],
+    "squeeze bottle": [
+      [
+        "100 ml",
+        "16"
+      ]
+    ],
+    "stainless bowl": [
+      [
+        "12 cm round",
+        "26"
+      ],
+      [
+        "10 cm round",
+        "93"
+      ],
+      [
+        "5 cm round",
+        "45"
+      ]
+    ],
+    "stainless chafing dish": [
+      [
+        "",
+        "14"
+      ]
+    ],
+    "stainless mixing bowl": [
+      [
+        "32 cm round",
+        "26"
+      ],
+      [
+        "28 cm round",
+        "12"
+      ]
+    ],
+    "stainless ring": [
+      [
+        "7inch round x 5cm",
+        "3"
+      ]
+    ],
+    "stainless tray": [
+      [
+        "40cm x 30cm",
+        "22"
+      ]
+    ],
+    "strainer": [
+      [
+        "",
+        "26"
+      ]
+    ],
+    "tissue box": [
+      [
+        "",
+        "6"
+      ]
+    ],
+    "tray racks": [
+      [
+        "",
+        "1"
+      ]
+    ],
+    "troly": [
+      [
+        "",
+        "1"
+      ]
+    ],
+    "white plastic mixing bowl": [
+      [
+        "13 cm round",
+        "18"
+      ]
+    ],
+    "white plates": [
+      [
+        "",
+        "48"
+      ]
+    ],
+    "wire wisk": [
+      [
+        "",
+        "26"
+      ]
+    ],
+    "wood liner (fluffy bread plate)": [
+      [
+        "",
+        "6"
+      ]
+    ]
+  }
+};
+
+    const categorySelect = document.getElementById("category");
+    const nameSelect = document.getElementById("name");
+    const sizeSelect = document.getElementById("size");
+
+    categorySelect.addEventListener("change", () => {
+      const selectedCategory = categorySelect.value;
+      nameSelect.innerHTML = '<option value="">-- Select Item --</option>';
+      sizeSelect.innerHTML = '<option value="">-- Select Size --</option>';
+
+      if (inventory[selectedCategory]) {
+        Object.keys(inventory[selectedCategory]).forEach(item => {
+          const option = document.createElement("option");
+          option.value = item;
+          option.textContent = item;
+          nameSelect.appendChild(option);
+        });
+      }
+    });
+
+    nameSelect.addEventListener("change", () => {
+      const selectedCategory = categorySelect.value;
+      const selectedItem = nameSelect.value;
+      sizeSelect.innerHTML = '<option value="">-- Select Size --</option>';
+
+      if (inventory[selectedCategory] && inventory[selectedCategory][selectedItem]) {
+        inventory[selectedCategory][selectedItem].forEach(([size, qty]) => {
+          const option = document.createElement("option");
+          option.value = size;
+          option.textContent = size || 'Standard';
+          sizeSelect.appendChild(option);
+        });
+      }
+    });
+
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwjAA_By28fYBK7sc5k5HdQzrN7E07Du05G6IUDJLZbKURxOji4jZLu0qWF1t7jefqYoQ/exec'; // Replace with your Apps Script URL
+    document.getElementById("inventoryForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+
+      fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData
+      }).then(() => {
+        alert("✅ Inventory entry submitted!");
+        e.target.reset();
+        nameSelect.innerHTML = '<option value="">-- Select Item --</option>';
+        sizeSelect.innerHTML = '<option value="">-- Select Size --</option>';
+      }).catch(error => {
+        alert("❌ Submission failed: " + error.message);
+      });
+    });
+  </script>
+</body>
+</html>
